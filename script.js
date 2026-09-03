@@ -1,3 +1,6 @@
+
+import { showError, clearError } from "./utils.js"
+
 const inputTask = document.getElementById('task')
 const buttonAdd = document.getElementById('add-task')
 const taskList = document.getElementById('tasks-list')
@@ -13,11 +16,15 @@ buttonAdd.addEventListener("click", () => {
     newTask.appendChild(newTaskText)
 
     taskList.appendChild(newTask)
+
 }
 
     if(taskName === ''){
-        return alert('Escreva uma tarefa.')
+        showError(inputTask, "Digite uma tarefa.")
+        return
     }
+
+    clearError(inputTask)
 
 createTask()
 
