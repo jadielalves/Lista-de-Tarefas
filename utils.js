@@ -17,7 +17,7 @@ export function showError(field, message){
 }
 
 export function clearError(field){
-    const error = field.nextElementSibling
+    const error = document.querySelector('.error')
 
     if(error){
         error.remove()
