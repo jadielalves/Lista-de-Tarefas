@@ -2,20 +2,69 @@
 import { showError, clearError } from "./utils.js"
 
 const inputTask = document.getElementById('task')
-const buttonAdd = document.getElementById('add-task')
+const inputHour = document.getElementById('hour')
 const taskList = document.getElementById('tasks-list')
 
-buttonAdd.addEventListener("click", () => {
+const newTaskButton = document.getElementById('new-task-button')
+const cancelButton = document.getElementById('cancel-button')
+const addButton = document.getElementById('add-button')
+const taskDialog = document.getElementById('task-dialog')
+
+
+newTaskButton.addEventListener('click', () => {
+        taskDialog.showModal()
+    })
+
+addButton.addEventListener('click', () => {
     const taskName = inputTask.value.trim()
+    const taskHour = inputHour.value
+    const splitHour = taskHour.split(':')
+
+    const hour = Number(splitHour[0])
+    const minutes = splitHour[1]
+
+    if(taskName === ''){
+        showError(inputTask, "Digite uma tarefa.")
+        return
+    }
+
+    clearError(inputTask)
+
+    if(taskHour === ''){
+        showError(inputHour, "Digite um horário.")
+        return
+    }
+
+    const task = {
+        name: taskName,
+        hour: taskHour,
+        completed: false
+    }
+
+    clearError(inputHour)
+
 
     function createTask(){
-
+    
     const checkButton = document.createElement('button')
     checkButton.classList.add('check-button')
     
+    
     const newTask = document.createElement("li")
     const newTaskText = document.createElement('span')
-    newTaskText.textContent = taskName
+    newTaskText.textContent = task.name
+
+    const newTaskHour = document.createElement('span')
+    if(hour < 12){
+        newTaskHour.textContent = `${task.hour} AM`
+    }
+    else if(hour === 12){
+        newTaskHour.textContent = `${task.hour} PM`
+    }
+    else {
+        const hourPM = hour - 12
+        newTaskHour.textContent = `0${hourPM}:${minutes} PM`
+    }
 
     const deleteButton = document.createElement('button')
     deleteButton.classList.add('delete-button')
@@ -23,6 +72,10 @@ buttonAdd.addEventListener("click", () => {
 
     newTask.appendChild(checkButton)
     newTask.appendChild(newTaskText)
+    newTask.appendChild(newTaskHour)
+
+    
+
     newTask.appendChild(deleteButton)
     taskList.appendChild(newTask)
     
@@ -33,8 +86,10 @@ buttonAdd.addEventListener("click", () => {
 
         if(checkButton.classList.contains('completed')){
             checkButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>'
+            task.completed = true
         } else {
             checkButton.innerHTML = ''
+            task.completed = false
         }
     })
 
@@ -42,17 +97,17 @@ buttonAdd.addEventListener("click", () => {
         newTask.remove()
     })
 
+    taskDialog.close()
+
 }
-
-    if(taskName === ''){
-        showError(inputTask, "Digite uma tarefa.")
-        return
-    }
-
-    clearError(inputTask)
 
 createTask()
 
     inputTask.value = ''
+    inputHour.value = ''
 
+})
+
+cancelButton.addEventListener('click', () => {
+    taskDialog.close()
 })

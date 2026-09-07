@@ -13,17 +13,25 @@
         <h1>MINHAS TAREFAS</h1>
     </header>
     <main>
-        <section id="task-box">
-            <input type="text" name="task" id="task" placeholder="Digite uma tarefa...">
-            <button id="add-task">+</button>
-        </section>
+        
+
+        <button id="new-task-button">New Task</button>
+
+        <dialog id="task-dialog">
+            Task:
+            <input type="text" name="" id="task" placeholder="Digite uma tarefa.">
+            Horário:
+            <input type="time" name="" id="hour">
+
+            <button id="cancel-button">Cancelar</button>
+            <button id="add-button">Adicionar</button>
+        </dialog>
 
         <section id="tasks-list-box">
             <ul id="tasks-list">
                 
             </ul>
         </section>
-
     </main>
 
     <script type="module" src="script.js"></script>
