@@ -23,3 +23,11 @@ export function clearError(field){
         error.remove()
     }
 }
+
+export function hideItem(item){
+    item.style.display = 'none'
+}
+
+export function showItem(item){
+    item.style.display = ''
+}

@@ -1,6 +1,7 @@
 
-import { showError, clearError } from "./utils.js"
+import { showError, clearError, hideItem, showItem } from "./utils.js"
 
+const titleMyTask = document.getElementById('title')
 const inputTask = document.getElementById('task')
 const inputHour = document.getElementById('hour')
 const taskList = document.getElementById('tasks-list')
@@ -10,7 +11,45 @@ const cancelButton = document.getElementById('cancel-button')
 const addButton = document.getElementById('add-button')
 const taskDialog = document.getElementById('task-dialog')
 
+const emptyList = document.getElementById('empty-list')
+
 const tasks = []
+
+function updateEmptyList(){
+
+    emptyList.innerHTML = ''
+
+    if(tasks.length === 0){
+    hideItem(titleMyTask)
+    hideItem(newTaskButton)
+    
+    const noTaskTitle = document.createElement('h1')
+    noTaskTitle.classList.add('no-task-title')
+    noTaskTitle.innerHTML = 'Você ainda não tem <br> nenhuma tarefa!'
+
+    const noTaskSubtitle = document.createElement('p')
+    noTaskSubtitle.classList.add('no-task-subtitle')
+    noTaskSubtitle.innerHTML = 'Parece que sua lista está vazia. Clique no botão abaixo <br> para começar a adicionar suas tarefas e organizar seu dia.'
+
+    const addFirstTaskButton = document.createElement('button')
+    addFirstTaskButton.classList.add('add-firsttask-button')
+    addFirstTaskButton.textContent = '+ Adicionar minha primeira tarefa'
+
+    addFirstTaskButton.addEventListener("click", () => {
+        taskDialog.showModal()
+    })
+
+    emptyList.appendChild(noTaskTitle)
+    emptyList.appendChild(noTaskSubtitle)
+    emptyList.appendChild(addFirstTaskButton)
+
+    }
+    if(tasks.length > 0){
+        showItem(titleMyTask)
+        showItem(newTaskButton)
+    }
+}
+
 
 function addCheckIcon(button){
     button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>'
@@ -83,10 +122,12 @@ function createTask(task){
         const index = tasks.indexOf(task)
 
         tasks.splice(index, 1)
-
+    
         newTask.remove()
 
         saveTasks(tasks)
+
+        updateEmptyList()
     })
 
 }
@@ -147,11 +188,16 @@ addButton.addEventListener('click', () => {
 
     createTask(task)
 
+    updateEmptyList()
+
     taskDialog.close()
 })
 
 cancelButton.addEventListener('click', () => {
     taskDialog.close()
+    
 })
 
 loadTasks()
+
+updateEmptyList()
