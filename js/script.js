@@ -23,22 +23,28 @@ function updateEmptyList(){
     hideItem(titleMyTask)
     hideItem(newTaskButton)
     
+    const noTaskImage = document.createElement('img')
+    noTaskImage.src = '/images/clipboard.png'
+    noTaskImage.alt = ''
+    noTaskImage.classList.add('no-task-image')
+
     const noTaskTitle = document.createElement('h1')
     noTaskTitle.classList.add('no-task-title')
-    noTaskTitle.innerHTML = 'Você ainda não tem <br> nenhuma tarefa!'
+    noTaskTitle.innerHTML = 'Seus pensamentos, sem estrutura'
 
     const noTaskSubtitle = document.createElement('p')
     noTaskSubtitle.classList.add('no-task-subtitle')
-    noTaskSubtitle.innerHTML = 'Parece que sua lista está vazia. Clique no botão abaixo <br> para começar a adicionar suas tarefas e organizar seu dia.'
+    noTaskSubtitle.innerHTML = 'Nem tudo precisa ficar na sua <br> cabeça. Coloque seus planos em ordem e <br> acompanhe o que realmente importa.'
 
     const addFirstTaskButton = document.createElement('button')
     addFirstTaskButton.classList.add('add-firsttask-button')
-    addFirstTaskButton.textContent = '+ Adicionar minha primeira tarefa'
+    addFirstTaskButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00cfff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg> <span>Adicionar Nova Tarefa</span>'
 
     addFirstTaskButton.addEventListener("click", () => {
         taskDialog.showModal()
     })
 
+    emptyList.appendChild(noTaskImage)
     emptyList.appendChild(noTaskTitle)
     emptyList.appendChild(noTaskSubtitle)
     emptyList.appendChild(addFirstTaskButton)
